@@ -1,0 +1,2 @@
+gépjármű márkát(manufacturer) külön táblába hozzáadni
+modellt is hozzáadni külön táblába
