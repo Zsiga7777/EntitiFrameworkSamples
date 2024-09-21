@@ -11,8 +11,8 @@ using Vehicles.Database;
 namespace Vehicles.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240918052148_init")]
-    partial class init
+    [Migration("20240921080742_FieldOfUse")]
+    partial class FieldOfUse
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,6 +64,44 @@ namespace Vehicles.Database.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Vehicles.Database.Entities.FieldOfUseEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("FieldOfUse");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Normal"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Taxi"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Freight transport"
+                        });
+                });
+
             modelBuilder.Entity("Vehicles.Database.Entities.ManufacturerEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -91,15 +129,6 @@ namespace Vehicles.Database.Migrations
                         .IsUnique();
 
                     b.ToTable("Manufacturer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Ceo = "Német Béla",
-                            FoundationYear = 1944L,
-                            Name = "Audi"
-                        });
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.ModelEntity", b =>
@@ -120,9 +149,6 @@ namespace Vehicles.Database.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<long?>("ManufacturerEntityId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ManufacturerId")
                         .HasColumnType("bigint");
 
@@ -133,22 +159,12 @@ namespace Vehicles.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerEntityId");
+                    b.HasIndex("ManufacturerId");
 
                     b.HasIndex("ModelName")
                         .IsUnique();
 
                     b.ToTable("Model");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            ChassisType = "sedan",
-                            EngineType = "3l-v6",
-                            ManufacturerId = 0L,
-                            ModelName = "Rs6"
-                        });
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.VehicleEntity", b =>
@@ -172,13 +188,13 @@ namespace Vehicles.Database.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
+                    b.Property<long>("FieldOfUseId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("LicencePlate")
                         .IsRequired()
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
-
-                    b.Property<long>("ManufacturerId")
-                        .HasColumnType("bigint");
 
                     b.Property<long>("ModelId")
                         .HasColumnType("bigint");
@@ -196,10 +212,10 @@ namespace Vehicles.Database.Migrations
 
                     b.HasIndex("ColorId");
 
+                    b.HasIndex("FieldOfUseId");
+
                     b.HasIndex("LicencePlate")
                         .IsUnique();
-
-                    b.HasIndex("ManufacturerId");
 
                     b.HasIndex("ModelId");
 
@@ -208,9 +224,13 @@ namespace Vehicles.Database.Migrations
 
             modelBuilder.Entity("Vehicles.Database.Entities.ModelEntity", b =>
                 {
-                    b.HasOne("Vehicles.Database.Entities.ManufacturerEntity", null)
+                    b.HasOne("Vehicles.Database.Entities.ManufacturerEntity", "Manufacturer")
                         .WithMany("Models")
-                        .HasForeignKey("ManufacturerEntityId");
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Manufacturer");
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.VehicleEntity", b =>
@@ -221,9 +241,9 @@ namespace Vehicles.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vehicles.Database.Entities.ManufacturerEntity", "Manufacturer")
+                    b.HasOne("Vehicles.Database.Entities.FieldOfUseEntity", "FieldOfUse")
                         .WithMany("Vehicles")
-                        .HasForeignKey("ManufacturerId")
+                        .HasForeignKey("FieldOfUseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -235,7 +255,7 @@ namespace Vehicles.Database.Migrations
 
                     b.Navigation("Color");
 
-                    b.Navigation("Manufacturer");
+                    b.Navigation("FieldOfUse");
 
                     b.Navigation("Model");
                 });
@@ -245,11 +265,14 @@ namespace Vehicles.Database.Migrations
                     b.Navigation("Vehicles");
                 });
 
+            modelBuilder.Entity("Vehicles.Database.Entities.FieldOfUseEntity", b =>
+                {
+                    b.Navigation("Vehicles");
+                });
+
             modelBuilder.Entity("Vehicles.Database.Entities.ManufacturerEntity", b =>
                 {
                     b.Navigation("Models");
-
-                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.ModelEntity", b =>

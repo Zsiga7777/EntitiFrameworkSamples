@@ -3,7 +3,11 @@ namespace Vehicles.Database;
 
 public class ApplicationDbContext : DbContext
     { 
+    public DbSet<ManufacturerEntity> Manufacturers {  get; set; }
+
+    public DbSet<ModelEntity> Models { get; set; }
     public DbSet<VehicleEntity> Vehicles { get; set; }
+    public DbSet<ColorEntity> Colors { get; set; }
     public ApplicationDbContext() : base()
     { }
 
@@ -11,6 +15,7 @@ public class ApplicationDbContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=VehicleDB;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;");
+        //.LogTo(Console.WriteLine);
     }
 
 
@@ -35,22 +40,25 @@ public class ApplicationDbContext : DbContext
                     Name = "Black",
                     Code = "000000"
                 });
-        builder.Entity<ManufacturerEntity>()
-                .HasData(new ManufacturerEntity
-                {
-                    Id = 1,
-                    Name = "Audi",
-                    FoundationYear = 1944,
-                    Ceo = "Német Béla"
-                });
-        builder.Entity<ModelEntity>()
-                .HasData(new ModelEntity
-                {
-                    Id = 1,
-                    ModelName = "Rs6",
-                    ChassisType = "sedan",
-                    EngineType = "3l-v6"
-                });
+        builder.Entity<FieldOfUseEntity>()
+                    .HasData(new FieldOfUseEntity
+                    {
+                        Id = 1,
+                        Name = "Normal"
+                    });
+        builder.Entity<FieldOfUseEntity>()
+                    .HasData(new FieldOfUseEntity
+                    {
+                        Id = 2,
+                        Name = "Taxi"
+                    });
+        builder.Entity<FieldOfUseEntity>()
+                    .HasData(new FieldOfUseEntity
+                    {
+                        Id = 3,
+                        Name = "Freight transport"
+                    });
+
     }
 }
 

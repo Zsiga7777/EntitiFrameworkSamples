@@ -1,2 +1,1 @@
-gépjármű márkát(manufacturer) külön táblába hozzáadni
-modellt is hozzáadni külön táblába
++1 tábla : felhasználási terület, 2mező(id,név)

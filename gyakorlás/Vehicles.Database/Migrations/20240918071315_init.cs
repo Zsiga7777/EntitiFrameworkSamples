@@ -50,17 +50,17 @@ namespace Vehicles.Database.Migrations
                     ModelName = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     ChassisType = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
                     EngineType = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    ManufacturerId = table.Column<long>(type: "bigint", nullable: false),
-                    ManufacturerEntityId = table.Column<long>(type: "bigint", nullable: true)
+                    ManufacturerId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Model", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Model_Manufacturer_ManufacturerEntityId",
-                        column: x => x.ManufacturerEntityId,
+                        name: "FK_Model_Manufacturer_ManufacturerId",
+                        column: x => x.ManufacturerId,
                         principalTable: "Manufacturer",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,7 +76,6 @@ namespace Vehicles.Database.Migrations
                     Weight = table.Column<long>(type: "bigint", nullable: false),
                     Power = table.Column<long>(type: "bigint", nullable: false),
                     ColorId = table.Column<long>(type: "bigint", nullable: false),
-                    ManufacturerId = table.Column<long>(type: "bigint", nullable: false),
                     ModelId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -86,12 +85,6 @@ namespace Vehicles.Database.Migrations
                         name: "FK_Vehicle_Color_ColorId",
                         column: x => x.ColorId,
                         principalTable: "Color",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Vehicle_Manufacturer_ManufacturerId",
-                        column: x => x.ManufacturerId,
-                        principalTable: "Manufacturer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -111,16 +104,6 @@ namespace Vehicles.Database.Migrations
                     { 2L, "000000", "Black" }
                 });
 
-            migrationBuilder.InsertData(
-                table: "Manufacturer",
-                columns: new[] { "Id", "Ceo", "FoundationYear", "Name" },
-                values: new object[] { 1L, "Német Béla", 1944L, "Audi" });
-
-            migrationBuilder.InsertData(
-                table: "Model",
-                columns: new[] { "Id", "ChassisType", "EngineType", "ManufacturerEntityId", "ManufacturerId", "ModelName" },
-                values: new object[] { 1L, "sedan", "3l-v6", null, 0L, "Rs6" });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Color_Name_Code",
                 table: "Color",
@@ -134,9 +117,9 @@ namespace Vehicles.Database.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Model_ManufacturerEntityId",
+                name: "IX_Model_ManufacturerId",
                 table: "Model",
-                column: "ManufacturerEntityId");
+                column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Model_ModelName",
@@ -154,11 +137,6 @@ namespace Vehicles.Database.Migrations
                 table: "Vehicle",
                 column: "LicencePlate",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vehicle_ManufacturerId",
-                table: "Vehicle",
-                column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicle_ModelId",

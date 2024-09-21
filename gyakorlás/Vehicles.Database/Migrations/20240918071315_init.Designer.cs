@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehicles.Database;
 
@@ -10,9 +11,11 @@ using Vehicles.Database;
 namespace Vehicles.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240918071315_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,44 +61,6 @@ namespace Vehicles.Database.Migrations
                             Id = 2L,
                             Code = "000000",
                             Name = "Black"
-                        });
-                });
-
-            modelBuilder.Entity("Vehicles.Database.Entities.FieldOfUseEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("FieldOfUse");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Name = "Normal"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Name = "Taxi"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Name = "Freight transport"
                         });
                 });
 
@@ -185,9 +150,6 @@ namespace Vehicles.Database.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)");
 
-                    b.Property<long>("FieldOfUseId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("LicencePlate")
                         .IsRequired()
                         .HasMaxLength(7)
@@ -208,8 +170,6 @@ namespace Vehicles.Database.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("FieldOfUseId");
 
                     b.HasIndex("LicencePlate")
                         .IsUnique();
@@ -238,12 +198,6 @@ namespace Vehicles.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vehicles.Database.Entities.FieldOfUseEntity", "FieldOfUse")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("FieldOfUseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Vehicles.Database.Entities.ModelEntity", "Model")
                         .WithMany("Vehicles")
                         .HasForeignKey("ModelId")
@@ -252,17 +206,10 @@ namespace Vehicles.Database.Migrations
 
                     b.Navigation("Color");
 
-                    b.Navigation("FieldOfUse");
-
                     b.Navigation("Model");
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.ColorEntity", b =>
-                {
-                    b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("Vehicles.Database.Entities.FieldOfUseEntity", b =>
                 {
                     b.Navigation("Vehicles");
                 });

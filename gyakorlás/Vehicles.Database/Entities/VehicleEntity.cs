@@ -40,12 +40,11 @@ namespace Vehicles.Database.Entities
 
         public virtual ColorEntity Color {  get; set; } //navigation property
 
-        [ForeignKey("Manufacturer")]
-        public uint ManufacturerId { get; set; }
-        public virtual ManufacturerEntity Manufacturer { get; set; }
-
         [ForeignKey("Model")]
         public uint ModelId { get; set; }
         public virtual ModelEntity Model { get; set; }
+        
+        public uint FieldOfUseId { get; set; }
+        public virtual FieldOfUseEntity FieldOfUse { get; set; }
     }
 }
