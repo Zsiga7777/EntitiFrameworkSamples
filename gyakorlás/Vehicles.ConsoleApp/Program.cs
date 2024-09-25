@@ -71,7 +71,8 @@ async Task AddFirstVehicleToDB()
            NumberOfDoors = 5,
            Power = 150,
            Weight = 1000,
-           FieldOfUseId = 1
+           FieldOfUseId = 1,
+            TypeId = 1
            
     };
     await dbContext.Vehicles.AddAsync(vehicle);
@@ -88,6 +89,7 @@ async Task AddSecondVehicleToDB()
         Power = 270,
         Weight = 2000,
         FieldOfUseId = 2,
+        TypeId = 2,
         Color = new ColorEntity 
         {
             Name = "piros",
@@ -105,7 +107,6 @@ async Task AddSecondVehicleToDB()
                 Ceo = "Géza"
             }
         }
-
     };
     await dbContext.Vehicles.AddAsync(vehicle);
     await dbContext.SaveChangesAsync();

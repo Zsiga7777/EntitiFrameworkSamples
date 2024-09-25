@@ -59,6 +59,13 @@ public class ApplicationDbContext : DbContext
                         Name = "Freight transport"
                     });
 
+        builder.Entity<TypeEntity>().HasData(
+            new TypeEntity { Id = 1, Name = "Car" },
+            new TypeEntity { Id = 2, Name = "Truck" },
+            new TypeEntity { Id = 3, Name = "Bus" },
+            new TypeEntity { Id = 4, Name = "Motorcycle" }
+            );
+
     }
 }
 

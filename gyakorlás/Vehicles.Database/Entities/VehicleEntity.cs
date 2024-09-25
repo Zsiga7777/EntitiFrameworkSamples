@@ -46,5 +46,9 @@ namespace Vehicles.Database.Entities
         
         public uint FieldOfUseId { get; set; }
         public virtual FieldOfUseEntity FieldOfUse { get; set; }
+
+        public uint TypeId {  get; set; }
+
+        public virtual TypeEntity Type { get; set; } 
     }
 }
