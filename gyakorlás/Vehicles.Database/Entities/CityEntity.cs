@@ -1,0 +1,14 @@
+﻿
+namespace Vehicles.Database.Entities;
+[Table("City")] 
+public class CityEntity
+{
+    [Key]
+    [Range(1000,9999)]
+    public uint PostalCode { get; set; }
+
+    [StringLength(60)]
+    public string Name { get; set; }
+
+    public IReadOnlyCollection<StreetEntity> Streets { get; set; }
+}

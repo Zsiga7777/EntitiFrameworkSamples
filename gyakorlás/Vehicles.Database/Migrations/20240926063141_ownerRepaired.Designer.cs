@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehicles.Database;
 
@@ -11,9 +12,11 @@ using Vehicles.Database;
 namespace Vehicles.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240926063141_ownerRepaired")]
+    partial class ownerRepaired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,24 +24,6 @@ namespace Vehicles.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Vehicles.Database.Entities.CityEntity", b =>
-                {
-                    b.Property<long>("PostalCode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PostalCode"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.HasKey("PostalCode");
-
-                    b.ToTable("City");
-                });
 
             modelBuilder.Entity("Vehicles.Database.Entities.ColorEntity", b =>
                 {
@@ -199,9 +184,6 @@ namespace Vehicles.Database.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<long>("StreetId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("TAJ")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -209,35 +191,7 @@ namespace Vehicles.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StreetId");
-
-                    b.HasIndex("TAJ")
-                        .IsUnique();
-
                     b.ToTable("Owner");
-                });
-
-            modelBuilder.Entity("Vehicles.Database.Entities.StreetEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("CityID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityID");
-
-                    b.ToTable("Street");
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.TypeEntity", b =>
@@ -359,28 +313,6 @@ namespace Vehicles.Database.Migrations
                     b.Navigation("Manufacturer");
                 });
 
-            modelBuilder.Entity("Vehicles.Database.Entities.OwnerEntity", b =>
-                {
-                    b.HasOne("Vehicles.Database.Entities.StreetEntity", "Street")
-                        .WithMany("owners")
-                        .HasForeignKey("StreetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Street");
-                });
-
-            modelBuilder.Entity("Vehicles.Database.Entities.StreetEntity", b =>
-                {
-                    b.HasOne("Vehicles.Database.Entities.CityEntity", "City")
-                        .WithMany("Streets")
-                        .HasForeignKey("CityID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
             modelBuilder.Entity("Vehicles.Database.Entities.VehicleEntity", b =>
                 {
                     b.HasOne("Vehicles.Database.Entities.ColorEntity", "Color")
@@ -424,11 +356,6 @@ namespace Vehicles.Database.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Vehicles.Database.Entities.CityEntity", b =>
-                {
-                    b.Navigation("Streets");
-                });
-
             modelBuilder.Entity("Vehicles.Database.Entities.ColorEntity", b =>
                 {
                     b.Navigation("Vehicles");
@@ -447,11 +374,6 @@ namespace Vehicles.Database.Migrations
             modelBuilder.Entity("Vehicles.Database.Entities.ModelEntity", b =>
                 {
                     b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("Vehicles.Database.Entities.StreetEntity", b =>
-                {
-                    b.Navigation("owners");
                 });
 
             modelBuilder.Entity("Vehicles.Database.Entities.TypeEntity", b =>

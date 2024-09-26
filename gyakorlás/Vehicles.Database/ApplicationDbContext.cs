@@ -8,6 +8,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ModelEntity> Models { get; set; }
     public DbSet<VehicleEntity> Vehicles { get; set; }
     public DbSet<ColorEntity> Colors { get; set; }
+    public DbSet<OwnerEntity> Owners { get; set; }
     public ApplicationDbContext() : base()
     { }
 

@@ -7,9 +7,10 @@ using Vehicles.Database.Entities;
     using var dbContext = new ApplicationDbContext();
 
 
-    //ha kell id
-    //await AddFirstVehicleToDB();
-    //await AddSecondVehicleToDB();
+//ha kell id
+//await AddFirstVehicleToDB();
+//await AddSecondVehicleToDB();
+//await AddOwnerToDB();
     //  await dbContext.Vehicles.AddAsync(opel new VehicleEntity
     //{
     //    ChassisNumber = "jjjjjjjjjjjjjjjjj",
@@ -20,23 +21,43 @@ using Vehicles.Database.Entities;
     //    Weight = 1500
     //}); ha nem kell id
 
-    //adat kiolvasás
+//adat kiolvasás
     //var vehicles = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color ).ToListAsync();//gyűjteményben tárolja, tolist nélkül csak lekérdezés
-    //PrintVehiclesOnConsole(vehicles);
-//    var vehicle = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color).FirstAsync(x => x.Id == 1);
-//PrintVehicleOnConsole(vehicle);
+                                                                                                                                        //PrintVehiclesOnConsole(vehicles);
+                                                                                                                                        //var vehicle = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color).FirstAsync(x => x.Id == 1);
+                                                                                                                                        //PrintVehicleOnConsole(vehicle);
 
-    //rekord módosítás
+//rekord módosítás
+//foreach (var vehicle in vehicles)
+//{
+//    vehicle.OwnerId = 1;
+//}
+//int id = 0;
+//foreach (var vehicle in vehicles)
+//{
+//    id++;
+//    vehicle.TypeId =(uint) id;
+//}
 
-    
+//await dbContext.SaveChangesAsync();
 
 
-    //rekord törlés
+//rekord törlés
 
 
-    // package manager consolba add-migration "init" (első lépés a szerver csináláshoz)
-    // update-database szerver tényleges létrehozása
-
+// package manager consolba add-migration "init" (első lépés a szerver csináláshoz)
+// update-database szerver tényleges létrehozása
+async Task AddOwnerToDB()
+{
+    OwnerEntity ownerEntity = new OwnerEntity()
+    { 
+        Name = "Zsiga Norbert",
+        Birthday = DateTime.Parse("2005.10.31"),
+        TAJ = "1234-2546-25541"
+    };
+    await dbContext.Owners.AddAsync(ownerEntity);
+    await dbContext.SaveChangesAsync();
+}
 
 async Task AddFirstVehicleToDB()
 { 

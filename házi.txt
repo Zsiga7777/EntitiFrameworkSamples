@@ -1,1 +1,1 @@
-+1 tábla : felhasználási terület, 2mező(id,név)
+ezeket a táblákat megcsinálni, plusz 2 rekord írása minden táblába
