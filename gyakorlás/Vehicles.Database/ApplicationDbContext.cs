@@ -9,6 +9,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<VehicleEntity> Vehicles { get; set; }
     public DbSet<ColorEntity> Colors { get; set; }
     public DbSet<OwnerEntity> Owners { get; set; }
+    public DbSet<StreetEntity> Streets { get; set; }
+    public DbSet<CityEntity> Cities { get; set; }
     public ApplicationDbContext() : base()
     { }
 

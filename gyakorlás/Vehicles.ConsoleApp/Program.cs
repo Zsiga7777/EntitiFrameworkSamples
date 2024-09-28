@@ -9,8 +9,8 @@ using Vehicles.Database.Entities;
 
 //ha kell id
 //await AddFirstVehicleToDB();
-//await AddSecondVehicleToDB();
-//await AddOwnerToDB();
+await AddSecondVehicleToDB();
+await AddThirdVehicleToDB();
     //  await dbContext.Vehicles.AddAsync(opel new VehicleEntity
     //{
     //    ChassisNumber = "jjjjjjjjjjjjjjjjj",
@@ -22,10 +22,10 @@ using Vehicles.Database.Entities;
     //}); ha nem kell id
 
 //adat kiolvasás
-    //var vehicles = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color ).ToListAsync();//gyűjteményben tárolja, tolist nélkül csak lekérdezés
-                                                                                                                                        //PrintVehiclesOnConsole(vehicles);
-                                                                                                                                        //var vehicle = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color).FirstAsync(x => x.Id == 1);
-                                                                                                                                        //PrintVehicleOnConsole(vehicle);
+//var vehicles = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color ).ToListAsync();//gyűjteményben tárolja, tolist nélkül csak lekérdezés
+//PrintVehiclesOnConsole(vehicles);
+//var vehicle = await dbContext.Vehicles.Include(x => x.Model).ThenInclude(x => x.Manufacturer).Include(x => x.Color).FirstAsync(x => x.Id == 1);
+//PrintVehicleOnConsole(vehicle);
 
 //rekord módosítás
 //foreach (var vehicle in vehicles)
@@ -47,17 +47,6 @@ using Vehicles.Database.Entities;
 
 // package manager consolba add-migration "init" (első lépés a szerver csináláshoz)
 // update-database szerver tényleges létrehozása
-async Task AddOwnerToDB()
-{
-    OwnerEntity ownerEntity = new OwnerEntity()
-    { 
-        Name = "Zsiga Norbert",
-        Birthday = DateTime.Parse("2005.10.31"),
-        TAJ = "1234-2546-25541"
-    };
-    await dbContext.Owners.AddAsync(ownerEntity);
-    await dbContext.SaveChangesAsync();
-}
 
 async Task AddFirstVehicleToDB()
 { 
@@ -126,6 +115,66 @@ async Task AddSecondVehicleToDB()
                 Name = "Honda",
                 FoundationYear = 2012,
                 Ceo = "Géza"
+            }
+        },
+        Owner = new OwnerEntity
+        { 
+            Name = "Zsiga Norbert",
+            Birthday = DateTime.Parse("2005-10-31"),
+            TAJ = "654484654685165",
+            Street = new StreetEntity
+            { 
+                Name = "Tükör utca",
+                City = new CityEntity
+                {
+                    PostalCode =(uint)5900,
+                    Name = "Orosháza"
+                }
+            }
+        }
+    };
+    await dbContext.Vehicles.AddAsync(vehicle);
+    await dbContext.SaveChangesAsync();
+}
+
+async Task AddThirdVehicleToDB()
+{
+    VehicleEntity vehicle = new VehicleEntity()
+    {
+        ChassisNumber = "hszdfghuawofhikgasw",
+        EngineNumber = "88",
+        LicencePlate = "kecske",
+        NumberOfDoors = 5,
+        Power = 90,
+        Weight = 1000,
+        FieldOfUseId = 2,
+        TypeId = 1,
+        ColorId = 1,
+        Model = new ModelEntity
+        {
+            ModelName = "Asztra",
+            ChassisType = "sedan",
+            EngineType = "i4",
+            Manufacturer = new ManufacturerEntity
+            {
+                Name = "Opel",
+                FoundationYear = 2005,
+                Ceo = "Béla"
+            }
+        },
+        Owner = new OwnerEntity
+        {
+            Name = "Zsiga Péter",
+            Birthday = DateTime.Parse("2010-10-31"),
+            TAJ = "7478598754987468",
+            Street = new StreetEntity
+            {
+                Name = "Bécsi körút",
+                City = new CityEntity
+                {
+                    PostalCode = (uint)6723,
+                    Name = "Szeged"
+                }
             }
         }
     };

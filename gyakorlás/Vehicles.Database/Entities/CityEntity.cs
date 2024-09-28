@@ -8,6 +8,7 @@ public class CityEntity
     public uint PostalCode { get; set; }
 
     [StringLength(60)]
+    [Required]
     public string Name { get; set; }
 
     public IReadOnlyCollection<StreetEntity> Streets { get; set; }
