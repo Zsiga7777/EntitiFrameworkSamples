@@ -12,8 +12,8 @@ using Vehicles.Database;
 namespace Vehicles.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240928074305_city javitott3")]
-    partial class cityjavitott3
+    [Migration("20240930114239_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,7 @@ namespace Vehicles.Database.Migrations
             modelBuilder.Entity("Vehicles.Database.Entities.CityEntity", b =>
                 {
                     b.Property<long>("PostalCode")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PostalCode"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -228,7 +225,7 @@ namespace Vehicles.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CityID")
+                    b.Property<long>("CityId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -238,7 +235,7 @@ namespace Vehicles.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityID");
+                    b.HasIndex("CityId");
 
                     b.ToTable("Street");
                 });
@@ -377,7 +374,7 @@ namespace Vehicles.Database.Migrations
                 {
                     b.HasOne("Vehicles.Database.Entities.CityEntity", "City")
                         .WithMany("Streets")
-                        .HasForeignKey("CityID")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

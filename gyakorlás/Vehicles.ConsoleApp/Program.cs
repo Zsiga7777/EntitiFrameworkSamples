@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using Vehicles.Database;
 using Vehicles.Database.Entities;
@@ -9,7 +10,7 @@ using Vehicles.Database.Entities;
 
 //ha kell id
 //await AddFirstVehicleToDB();
-await AddSecondVehicleToDB();
+//await AddSecondVehicleToDB();
 await AddThirdVehicleToDB();
     //  await dbContext.Vehicles.AddAsync(opel new VehicleEntity
     //{
@@ -141,7 +142,7 @@ async Task AddThirdVehicleToDB()
 {
     VehicleEntity vehicle = new VehicleEntity()
     {
-        ChassisNumber = "hszdfghuawofhikgasw",
+        ChassisNumber = "hszdfghuawofhikga",
         EngineNumber = "88",
         LicencePlate = "kecske",
         NumberOfDoors = 5,

@@ -11,6 +11,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<OwnerEntity> Owners { get; set; }
     public DbSet<StreetEntity> Streets { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
+
+    public DbSet<FieldOfUseEntity> FieldOfUses { get; set; }
+    public DbSet<TypeEntity> Types { get; set; }
     public ApplicationDbContext() : base()
     { }
 

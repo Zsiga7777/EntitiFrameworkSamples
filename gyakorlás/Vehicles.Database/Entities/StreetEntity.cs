@@ -8,8 +8,8 @@ public class StreetEntity
 
     [StringLength(60)]
     public string Name { get; set; }
-
-    public uint CityID { get; set; }
+    [ForeignKey("City")]
+    public uint CityId { get; set; }
     public virtual CityEntity City { get; set; }
 
     public IReadOnlyCollection<OwnerEntity> owners { get; set; }

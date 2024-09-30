@@ -5,6 +5,7 @@ public class CityEntity
 {
     [Key]
     [Range(1000,9999)]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public uint PostalCode { get; set; }
 
     [StringLength(60)]

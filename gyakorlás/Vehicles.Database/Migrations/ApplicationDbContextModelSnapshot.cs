@@ -25,10 +25,7 @@ namespace Vehicles.Database.Migrations
             modelBuilder.Entity("Vehicles.Database.Entities.CityEntity", b =>
                 {
                     b.Property<long>("PostalCode")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PostalCode"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -225,7 +222,7 @@ namespace Vehicles.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CityID")
+                    b.Property<long>("CityId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -235,7 +232,7 @@ namespace Vehicles.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityID");
+                    b.HasIndex("CityId");
 
                     b.ToTable("Street");
                 });
@@ -374,7 +371,7 @@ namespace Vehicles.Database.Migrations
                 {
                     b.HasOne("Vehicles.Database.Entities.CityEntity", "City")
                         .WithMany("Streets")
-                        .HasForeignKey("CityID")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
