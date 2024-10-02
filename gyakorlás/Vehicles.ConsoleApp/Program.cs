@@ -10,7 +10,7 @@ using Vehicles.Database.Entities;
 
 //ha kell id
 //await AddFirstVehicleToDB();
-//await AddSecondVehicleToDB();
+await AddSecondVehicleToDB();
 await AddThirdVehicleToDB();
     //  await dbContext.Vehicles.AddAsync(opel new VehicleEntity
     //{
